@@ -38,15 +38,15 @@ export default function App() {
            <WorksSection />
       </section>
      
- <section id="test">
-             <TestimonialsSection/>
-      </section>
+ 
       
       <section id="contact">
             <ContactSection />
       </section>
 
-     
+     <section id="test">
+             <TestimonialsSection/>
+      </section>
 
        <section id="feedback">
              <FeedbackSection/>

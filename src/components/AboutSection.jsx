@@ -3,7 +3,7 @@ import { FaClock, FaClipboardList, FaCheckCircle } from "react-icons/fa";
 
 export default function AboutSection() {
   return (
-    <section id="about" dir="rtl" className="bg-gray-100 text-gray-800">
+    <section id="about" dir="rtl" className="bg-[#f0f0f0] text-gray-800">
       <div className="max-w-screen-xl mx-auto px-6 py-16">
         {/* Heading */}
         <br/>
@@ -47,50 +47,51 @@ export default function AboutSection() {
         </div>
 {/* Features Section */}
 <div className="mt-16">
-  <div className="
+  <div
+    className="
       grid 
-      grid-cols-1 
-      sm:grid-cols-3 
-      gap-10 
+      grid-cols-3       /* ALWAYS 3 columns on mobile */
+      md:grid-cols-3    /* same on desktop */
+      gap-6 
       text-center 
-      justify-items-center 
-      rtl
+      justify-items-center
     "
     dir="rtl"
   >
-  
+
     {/* دقّة */}
     <div className="flex flex-col items-center">
-      <img 
-        src="images/tick.png"  /* replace with your icon path */
-        className="w-30 h-40 object-contain"
+      <img
+        src="images/tick.png"
+        className="w-16 h-16 md:w-28 md:h-32 object-contain" 
         alt="دقّة"
       />
-      <p className="mt-4 text-xl font-semibold text-gray-800">دقّة</p>
+      <p className="mt-2 text-lg md:text-xl font-semibold text-gray-800">دقّة</p>
     </div>
 
     {/* كفاءة */}
     <div className="flex flex-col items-center">
-      <img 
-        src="images/list.webp"  /* replace with your icon path */
-        className="w-30 h-40 object-contain"
+      <img
+        src="images/list.webp"
+        className="w-16 h-16 md:w-28 md:h-32 object-contain"
         alt="كفاءة"
       />
-      <p className="mt-4 text-xl font-semibold text-gray-800">كفاءة</p>
+      <p className="mt-2 text-lg md:text-xl font-semibold text-gray-800">كفاءة</p>
     </div>
 
-
-      {/* سرعة */}
+    {/* سرعة */}
     <div className="flex flex-col items-center">
-      <img 
-        src="images/fast.png"  /* replace with your icon path */
-        className="w-15 h-40 "
+      <img
+        src="images/fast.png"
+        className="w-16 h-16 md:w-28 md:h-32 object-contain"
         alt="سرعة"
       />
-      <p className="mt-4 text-xl font-semibold text-gray-800">سرعة</p>
+      <p className="mt-2 text-lg md:text-xl font-semibold text-gray-800">سرعة</p>
     </div>
+
   </div>
 </div>
+
 
         
           </div>

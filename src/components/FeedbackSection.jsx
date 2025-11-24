@@ -59,7 +59,7 @@ export default function FeedbackSection() {
   }
 
   return (
-    <section className="w-full bg-white py-16" dir="rtl">
+    <section className="w-full bg-[#f0f0f0]" dir="rtl">
       <div className="max-w-screen-md mx-auto px-6">
         <div className="text-right mb-8">
           <h2 className="text-3xl font-bold">أرسل لنا تقييمك وملاحظاتك</h2>

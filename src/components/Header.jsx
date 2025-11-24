@@ -1,74 +1,57 @@
+// Header.jsx
 import React, { useEffect, useRef, useState } from "react";
 import CenterNav from "./CenterNav";
 import RightLogo from "./RightLogo";
 
-/* topBarHeight (40) and headerHeight (112) : adjust if you change sizes */
-const topBarHeight = 40;   // px
-const headerHeight = 112;  // px (h-28 ≈ 112px)
+/* topBarHeight is the fixed top bar height (px). Keep this in sync with TopBar. */
+const TOP_BAR_HEIGHT = 40; // px
 
 export default function Header() {
-  const [activeId, setActiveId] = useState("home");
-  const observerRef = useRef(null);
+  const rootRef = useRef(null);
+  const headerRef = useRef(null);
+  const [isMounted, setIsMounted] = useState(false);
 
+  // compute header height (desktop vs mobile) after mount and whenever window resizes
   useEffect(() => {
-    const ids = ["home", "about", "services", "works", "contact"];
-    const els = ids.map((id) => document.getElementById(id)).filter(Boolean);
+    function updateOffsetVar() {
+      if (!headerRef.current) return;
+      // actual header element height
+      const headerHeight = headerRef.current.getBoundingClientRect().height;
+      const total = TOP_BAR_HEIGHT + Math.round(headerHeight);
+      // set CSS variable so the whole page can read it
+      document.documentElement.style.setProperty("--site-top-offset", `${total}px`);
+    }
 
-    // IntersectionObserver picks the section with the largest intersection
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        let best = null;
-        entries.forEach((e) => {
-          if (!best || e.intersectionRatio > best.intersectionRatio) best = e;
-        });
-        if (best && best.target?.id) setActiveId(best.target.id);
-      },
-      {
-        root: null,
-        // rootMargin moves the "active" threshold up so header offset is considered
-        rootMargin: `0px 0px -${Math.floor(window.innerHeight * 0.4)}px 0px`,
-        threshold: [0, 0.25, 0.5, 0.75, 1],
-      }
-    );
-
-    els.forEach((el) => observerRef.current.observe(el));
-    return () => observerRef.current && observerRef.current.disconnect();
+    updateOffsetVar();
+    setIsMounted(true);
+    window.addEventListener("resize", updateOffsetVar);
+    return () => window.removeEventListener("resize", updateOffsetVar);
   }, []);
-
-  // Called by CenterNav when a nav button is clicked
-  function scrollToSection(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-    // setActiveId immediately so user sees underline while scrolling
-    setActiveId(id);
-  }
 
   return (
     <>
-      {/* Top bar is assumed fixed above header in your layout; keeping header fixed below it */}
+      {/* header fixed below top bar. height uses tailwind responsive heights:
+          md:h-28 -> desktop ~112px, h-16 -> mobile ~64px */}
       <header
-        className="w-full bg-[#d1b147] shadow-md"
+        ref={headerRef}
+        className="w-full bg-[#d1b147] shadow-md fixed left-0 z-50"
         style={{
-          position: "fixed",
-          top: `${topBarHeight}px`,
-          left: 0,
-          height: headerHeight,
-          zIndex: 55,
+          top: `${TOP_BAR_HEIGHT}px`,
+          // we don't set explicit pixel height here; use tailwind classes inside container
         }}
       >
-        <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between px-6 h-full">
+        <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between px-6 h-16 md:h-28">
+          {/* Center nav handles both desktop and mobile nav + mobile hamburger */}
           <div className="flex-1">
-            {/* Pass activeId and scroll function down */}
-            <CenterNav active={activeId} onNavClick={scrollToSection} />
+            <CenterNav topBarHeight={TOP_BAR_HEIGHT} headerHeightDesktop={112} />
           </div>
 
-          {/* RightLogo stays on the right */}
-          <RightLogo />
+          {/* RightLogo shown only on medium+ screens (keeps desktop behavior) */}
+          <div className="hidden md:flex items-center">
+            <RightLogo />
+          </div>
         </div>
       </header>
-
-      
     </>
   );
 }
