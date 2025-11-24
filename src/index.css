@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  body {
+    @apply bg-[#f0f0f0];
+  }
+}
+
+
+/* optional variables */
+:root {
+  --gold: #c8a63b;
+  --gold-2: #d1b147;
+}
+/* load Barlow (if you prefer another font for Arabic replace it) */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap');
+
+.about-section {
+  font-family: "Barlow", sans-serif;
+  color: rgb(80,85,92);         /* exact color from the screenshot */
+}
+
+/* exact paragraph typography from screenshot */
+.about-section p {
+  font-size: 18px;              /* exact size */
+  line-height: 26.1px;          /* exact line-height */
+  color: rgb(80,85,92);
+  margin: 0 auto;
+}
+
+/* center the block and constrain width like your screenshot */
+.about-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;           /* text is centered in your screenshot */
+  direction: rtl;               /* right-to-left for Arabic */
+}
+
+/* bold words style */
+.about-section strong,
+.about-section .bold {
+  font-weight: 700;             /* bold */
+  color: rgb(80,85,92);         /* same color (keeps contrast) */
+}
+
+/* heading style */
+.about-section h2 {
+  font-size: 32px;
+  margin-bottom: 12px;
+  color: rgb(15,23,42);         /* darker heading color */
+}
+
+/* divider like your screenshot */
+.about-divider {
+  width: 180px;
+  height: 3px;
+  background: linear-gradient(#e0e0e0,#e0e0e0);
+  margin: 28px auto;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* This prevents underline / visual jump: ensure links don't show text-decoration */
+nav a { text-decoration: none; }
+
+/* Ensure the underline element doesn't affect layout */
+nav li { line-height: 1; }
