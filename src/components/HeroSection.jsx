@@ -8,8 +8,8 @@ export default function HeroSection() {
       className="
         relative
         w-full
-        min-h-[70vh]
-        bg-cover
+ min-h-[85vh]
+          bg-cover
         bg-center
         bg-no-repeat
         flex

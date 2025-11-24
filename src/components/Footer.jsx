@@ -25,7 +25,7 @@ export default function Footer() {
           {/* EMAIL */}
           <a
             href="mailto:info@binbashar.com"
-            className="flex items-center gap-2 hover:text-[#b6912c] transition"
+            className="flex items-center gap-2 hover:text-[#b6912c] transition text-lg"
           >
             <FaEnvelope className="text-[#b6912c]" />
             info@binbashar.com
@@ -35,14 +35,14 @@ export default function Footer() {
           <span className="hidden md:block mx-3 text-[#b6912c]">|</span>
 
           {/* PHONE NUMBERS */}
-          <div className="flex items-center gap-2 hover:text-[#b6912c] transition cursor-pointer">
-            <FaPhone className="text-[#b6912c]" />
+          <div className="flex items-center gap-2 hover:text-[#b6912c] transition cursor-pointer text-lg">
+            <FaPhone className="text-[#b6912c] text-" />
             77790894 – 77710165 – 77755602
           </div>
         </div>
 
         {/* COMPANY NAME */}
-        <p className="text-[#b6912c] text-sm text-center leading-relaxed">
+        <p className="text-white text-xl text-center leading-relaxed">
           شركة بن بشّار للمقاولات – الشركة الأولى والوحيدة في قطر
         </p>
       </div>

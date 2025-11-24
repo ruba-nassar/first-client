@@ -65,31 +65,20 @@ export default function ServicesSection() {
           {services.map((s) => (
             <div key={s.id}>
 
-              {/* ✔ Title centered */}
-              <h3 className="text-[#b6912c] text-3xl md:text-5xl font-semibold text-center mb-8">
+              {/* TITLE: centered, same visual start for all titles */}
+              <h3 className="text-[#b6912c] text-3xl md:text-5xl font-semibold mb-8 mx-auto text-center md:max-w-[720px]">
                 {s.title}
               </h3>
 
-              {/* ✔ MOBILE = text → image  
-                  ✔ DESKTOP = image left → text right */}
+              {/* LAYOUT:
+                  - md: two columns: left fixed image (300px), right flexible content
+                  - paragraph inside right column centered horizontally with a wide max width
+              */}
               <div
-                className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center"
+                className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-10 items-start"
                 style={{ direction: "ltr" }}
               >
-
-                {/* TEXT FIRST on MOBILE (order-1) 
-                    TEXT SECOND on DESKTOP (md:order-2) */}
-                <div
-                  className="order-1 md:order-2 text-center md:text-right"
-                  style={{ direction: "rtl" }}
-                >
-                  <p className="text-lg md:text-xl text-gray-800 leading-relaxed max-w-prose mx-auto md:mx-0">
-                    {s.text}
-                  </p>
-                </div>
-
-                {/* IMAGE SECOND on MOBILE (order-2)
-                    IMAGE FIRST on DESKTOP (md:order-1) */}
+                {/* IMAGE column (left on desktop) */}
                 <div className="order-2 md:order-1 flex justify-center md:justify-start">
                   <img
                     src={s.img}
@@ -99,6 +88,24 @@ export default function ServicesSection() {
                   />
                 </div>
 
+                {/* TEXT column (right on desktop) — centered inside this column */}
+                <div
+                  className="order-1 md:order-2 flex justify-center"
+                  style={{ direction: "rtl" }}
+                >
+                  {/* key changes:
+                        - text-center instead of text-justify/text-right to avoid blocky aligned lines
+                        - text-black for color
+                        - keep max-w to control wrapping
+                        - keep mt spacing so it stays in the same vertical position
+                  */}
+                  <p
+                    className="text-xl md:text-2xl font-semibold text-black leading-relaxed text-center max-w-[550px] mt-14 mr-56"
+                    style={{ direction: "rtl" }}
+                  >
+                    {s.text}
+                  </p>
+                </div>
               </div>
             </div>
           ))}
