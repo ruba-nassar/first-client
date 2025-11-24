@@ -107,13 +107,11 @@ export default function CenterNav({ topBarHeight = 40, headerHeightDesktop = 112
     </div>
   );
 
-  /* ------------------ Mobile Fullscreen Menu (improved) ------------------ */
-  const MobileMenu = (
-    // top-level covers entire viewport; slide/opacity handled by classes
+  /* ------------------ Mobile Fullscreen Menu (render only when open) ------------------ */
+  const MobileMenu = open ? (
+    // top-level covers entire viewport when open
     <div
-      className={`fixed inset-0 z-[9998] md:hidden transition-all duration-250 ${
-        open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-      }`}
+      className="fixed inset-0 z-[9998] md:hidden"
       aria-hidden={!open}
     >
       {/* dimmer behind panel; clicking closes */}
@@ -140,7 +138,6 @@ export default function CenterNav({ topBarHeight = 40, headerHeightDesktop = 112
             <IoClose />
           </button>
 
-          {/* you can optionally center logo/text; kept right aligned like screenshot */}
           <div className="text-base font-semibold text-gray-800">binbashar.water</div>
         </div>
 
@@ -182,13 +179,10 @@ export default function CenterNav({ topBarHeight = 40, headerHeightDesktop = 112
             <a href="https://www.facebook.com/profile.php?id=61557126641217" target="_blank" rel="noreferrer"><FaFacebook /></a>
             <a href="https://www.tiktok.com/@binbashar50?_r=1&_t=ZS-91dhn70HYHK" target="_blank" rel="noreferrer"><FaTiktok /></a>
           </div>
-
-          {/* powered-by / footer note (optional) */}
-          
         </div>
       </div>
     </div>
-  );
+  ) : null;
 
   return (
     <>

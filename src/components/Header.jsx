@@ -5,39 +5,57 @@ import RightLogo from "./RightLogo";
 
 /* topBarHeight is the fixed top bar height (px). Keep this in sync with TopBar. */
 const TOP_BAR_HEIGHT = 40; // px
+const MOBILE_BREAKPOINT = 768; // px (matches Tailwind md breakpoint)
 
 export default function Header() {
-  const rootRef = useRef(null);
   const headerRef = useRef(null);
   const [isMounted, setIsMounted] = useState(false);
 
-  // compute header height (desktop vs mobile) after mount and whenever window resizes
   useEffect(() => {
     function updateOffsetVar() {
       if (!headerRef.current) return;
-      // actual header element height
-      const headerHeight = headerRef.current.getBoundingClientRect().height;
-      const total = TOP_BAR_HEIGHT + Math.round(headerHeight);
-      // set CSS variable so the whole page can read it
+
+      // measure header height (actual rendered height)
+      const headerHeight = Math.round(headerRef.current.getBoundingClientRect().height);
+
+      // topBar is always present (fixed at top), so total offset = topBar + header
+      const total = TOP_BAR_HEIGHT + headerHeight;
+
+      // set CSS variable so other sections (hero, anchors) can read it
       document.documentElement.style.setProperty("--site-top-offset", `${total}px`);
     }
 
+    // run once on mount
     updateOffsetVar();
     setIsMounted(true);
-    window.addEventListener("resize", updateOffsetVar);
-    return () => window.removeEventListener("resize", updateOffsetVar);
+
+    // update on resize - throttle with rAF
+    let rafId = null;
+    function handleResize() {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        updateOffsetVar();
+        rafId = null;
+      });
+    }
+    window.addEventListener("resize", handleResize);
+
+    // cleanup
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
+  // IMPORTANT: header stays **below** the top bar on all breakpoints.
+  // TopBar is fixed at top:0; header should sit at top: TOP_BAR_HEIGHT.
   return (
     <>
-      {/* header fixed below top bar. height uses tailwind responsive heights:
-          md:h-28 -> desktop ~112px, h-16 -> mobile ~64px */}
       <header
         ref={headerRef}
         className="w-full bg-[#d1b147] shadow-md fixed left-0 z-50"
         style={{
           top: `${TOP_BAR_HEIGHT}px`,
-          // we don't set explicit pixel height here; use tailwind classes inside container
         }}
       >
         <div className="w-full max-w-screen-xl mx-auto flex items-center justify-between px-6 h-16 md:h-28">

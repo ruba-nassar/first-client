@@ -49,7 +49,6 @@ const services = [
 export default function ServicesSection() {
   return (
     <section className="w-full py-20 bg-[#f0f0f0]" id="services">
-      {/* smaller horizontal padding on mobile, original on md+ */}
       <div className="max-w-screen-xl mx-auto px-4 md:px-6">
 
         {/* MAIN SECTION TITLE */}
@@ -66,14 +65,15 @@ export default function ServicesSection() {
           {services.map((s) => (
             <div key={s.id}>
 
-              {/* TITLE: centered, same visual start for all titles */}
+              {/* Title: always centered */}
               <h3 className="text-[#b6912c] text-3xl md:text-5xl font-semibold mb-8 mx-auto text-center md:max-w-[720px]">
                 {s.title}
               </h3>
 
-              {/* LAYOUT:
-                  - mobile: single column, centered image + centered paragraph
-                  - md+: two columns: left fixed image (300px), right flexible content (unchanged)
+              {/* Layout:
+                  - mobile: single column (image then text)
+                  - md+: two columns -> left: image (300px), right: centered text-column (fixed width)
+                  This makes the paragraph appear centered on page while image stays left.
               */}
               <div
                 className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6 md:gap-10 items-start"
@@ -89,23 +89,23 @@ export default function ServicesSection() {
                   />
                 </div>
 
-                {/* TEXT column (right on desktop) — centered on mobile */}
+                {/* TEXT column (right on desktop) — centered block on md+ */}
                 <div
                   className="order-1 md:order-2 flex justify-center"
                   style={{ direction: "rtl" }}
                 >
                   <p
                     className="
-                      text-base md:text-2xl        /* smaller on mobile, same large on desktop */
-                      font-medium                   /* lighter weight for paragraph */
+                      text-base md:text-2xl
+                      font-medium
                       text-black
                       leading-relaxed
-                      text-center md:text-right    /* centered on mobile, right-aligned on desktop */
-                      max-w-full md:max-w-[550px]  /* full width mobile, constrained on desktop */
-                      mt-6 md:mt-14                 /* smaller top margin on mobile */
-                      px-2 md:px-0                 /* small inner padding on mobile so text doesn't touch edges */
-                      break-words
-                    "
+                      text-center md:text-center
+                      max-w-full md:max-w-[540px]
+                      mt-6 md:mt-14
+                      px-2 md:px-0
+                      md:mr-64
+                      "
                     style={{ direction: "rtl" }}
                   >
                     {s.text}
