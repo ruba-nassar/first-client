@@ -7,7 +7,7 @@ const services = [
     title: "كشف تسريب المياه والرطوبة",
     img: "images/img1.webp",
     text:
-      "اكشتف مصدر التسرب قبل أن يتفاقم الضرر — نستخدم أحدث التقنيات لكشف تسربات المياه والرطوبة بدون تكسير. شركة بن بشار للمقاولات، الشركة الأولى والوحيدة في قطر.",
+      "اكشتف مصدر التسرب قبل أن يتفاقم الضرر — نستخدم أحدث التقنيات لكشف تسربات المياه والرطوبة بدون تكسير. شركة بن بشّار للمقاولات، الشركة الأولى والوحيدة في قطر.",
   },
   {
     id: 2,
@@ -49,7 +49,8 @@ const services = [
 export default function ServicesSection() {
   return (
     <section className="w-full py-20 bg-[#f0f0f0]" id="services">
-      <div className="max-w-screen-xl mx-auto px-6">
+      {/* smaller horizontal padding on mobile, original on md+ */}
+      <div className="max-w-screen-xl mx-auto px-4 md:px-6">
 
         {/* MAIN SECTION TITLE */}
         <div className="mb-12">
@@ -71,11 +72,11 @@ export default function ServicesSection() {
               </h3>
 
               {/* LAYOUT:
-                  - md: two columns: left fixed image (300px), right flexible content
-                  - paragraph inside right column centered horizontally with a wide max width
+                  - mobile: single column, centered image + centered paragraph
+                  - md+: two columns: left fixed image (300px), right flexible content (unchanged)
               */}
               <div
-                className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-10 items-start"
+                className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-6 md:gap-10 items-start"
                 style={{ direction: "ltr" }}
               >
                 {/* IMAGE column (left on desktop) */}
@@ -83,24 +84,28 @@ export default function ServicesSection() {
                   <img
                     src={s.img}
                     alt={s.title}
-                    className="w-[300px] h-[240px] object-contain rounded-md"
+                    className="w-48 h-40 md:w-[300px] md:h-[240px] object-contain rounded-md mx-auto"
                     loading="lazy"
                   />
                 </div>
 
-                {/* TEXT column (right on desktop) — centered inside this column */}
+                {/* TEXT column (right on desktop) — centered on mobile */}
                 <div
                   className="order-1 md:order-2 flex justify-center"
                   style={{ direction: "rtl" }}
                 >
-                  {/* key changes:
-                        - text-center instead of text-justify/text-right to avoid blocky aligned lines
-                        - text-black for color
-                        - keep max-w to control wrapping
-                        - keep mt spacing so it stays in the same vertical position
-                  */}
                   <p
-                    className="text-xl md:text-2xl font-semibold text-black leading-relaxed text-center max-w-[550px] mt-14 mr-56"
+                    className="
+                      text-base md:text-2xl        /* smaller on mobile, same large on desktop */
+                      font-medium                   /* lighter weight for paragraph */
+                      text-black
+                      leading-relaxed
+                      text-center md:text-right    /* centered on mobile, right-aligned on desktop */
+                      max-w-full md:max-w-[550px]  /* full width mobile, constrained on desktop */
+                      mt-6 md:mt-14                 /* smaller top margin on mobile */
+                      px-2 md:px-0                 /* small inner padding on mobile so text doesn't touch edges */
+                      break-words
+                    "
                     style={{ direction: "rtl" }}
                   >
                     {s.text}
