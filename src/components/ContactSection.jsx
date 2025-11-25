@@ -141,7 +141,7 @@ export default function ContactSection() {
             <p className="mt-3 text-sm font-semibold">Email</p>
           </a>
 
-          <a href="tel:97477755602" className="flex flex-col items-center">
+          <a href="tel:0097477755602" className="flex flex-col items-center">
             <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center">
               <FaPhoneAlt size={28} color="white" />
             </div>
